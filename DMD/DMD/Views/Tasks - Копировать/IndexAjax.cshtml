@@ -21,22 +21,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
-        {
+@foreach (var item in Model) {
+            
             <tr id="TR_@item.ID">
-                <partial name="_task" model="@item"/>
-            </tr>        
+                <partial name="_Task" model="@item"/>
+            </tr>    
+            
         }
     </tbody>
 </table>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartical");}
     <script>
         function deleteItem(form){
+            var removeItem(form){
                 var removeItemEl = $(form);
                 removeItemEl.closest("tr").remove();
-            } 
+            }
+        }
     </script>
 
 }

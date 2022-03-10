@@ -162,6 +162,17 @@ namespace DMD.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #region "Ajax Functions"
+        [HttpPost]
+        public IActionResult DeleteTask(int id)
+        {
+            var task = _context.Tasks.Find(id);
+            _context.Tasks.Remove(task);
+            _context.SaveChanges();
+            return Ok();
+        }
+        #endregion
+
         private bool TaskExists(int id)
         {
             return _context.Tasks.Any(e => e.ID == id);
