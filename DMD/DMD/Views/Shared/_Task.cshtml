@@ -9,7 +9,7 @@
             <td>
                 <div class="btn-group">
 
-                <form asp-action="EditTask" id="@Model.ID"
+                <form asp-action="EditTask" asp-route-id="@Model.ID"
                 data-ajax="true"
                 data-ajax-update="#DivDetailView"
                 data-ajax-success="ShowDetailForm()">
@@ -18,7 +18,7 @@
                 </button>
                 </form>
 
-                <form asp-action="ViewTask" id="@Model.ID"
+                <form asp-action="ViewTask" asp-route-id="@Model.ID"
                 data-ajax="true"
                 data-ajax-update="#DivDetailView"
                 data-ajax-success="ShowDetailForm()">

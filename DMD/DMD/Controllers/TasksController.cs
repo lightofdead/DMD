@@ -28,8 +28,8 @@ namespace DMD.Controllers
         }
         public IActionResult IndexAjax()
         {
-            List<Models.Task> tasks = _context.Tasks.ToList();
-            return View(tasks);
+            var tasks = _context.Tasks.Include(t => t.ParentTask);
+            return View(tasks.ToList());
         }
 
         // GET: Tasks/Details/5
@@ -97,7 +97,7 @@ namespace DMD.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ParentID")] Models.Task task)
+        public async Task<IActionResult> Edit(/*int id, [Bind("ID,Name,ParentID")]*/ Models.Task task)
         {
             /*if (id != task.ID)
             {
@@ -172,18 +172,24 @@ namespace DMD.Controllers
             return Ok();
         }
 
-        public IActionResult ViewTask(string Id)
+        public IActionResult ViewTask(int? Id)
         {
-            Models.Task task = _context.Tasks.Find(Id);
+            var task = _context.Tasks.Find(Id);
+
+            ViewData["ParentID"] = new SelectList(_context.Tasks, "ID", "ID", task.ParentID);
+
             return PartialView("_detail", task);
         }
 
-        public IActionResult EditTask(string Id)
+        public IActionResult EditTask(int Id)
         {
             Models.Task task = _context.Tasks.Find(Id);
+
+            ViewData["ParentID"] = new SelectList(_context.Tasks, "ID", "ID", task.ParentID);
             return PartialView("_Edit", task);
         }
 
+        [HttpPost]
         public IActionResult UpdateTask(Models.Task task)
         {
             _context.Attach(task);
