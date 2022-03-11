@@ -3,40 +3,59 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-
-<p>
-    <a asp-action="Create" class="btn btn-sm btn-success ml-1">Create New Ajax</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParentTask)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-        {
-            <tr id="TR_@item.ID">
-                <partial name="_task" model="@item"/>
-            </tr>        
-        }
-    </tbody>
-</table>
-
+<div class = "container invisible"
+     style="top:10%; height:80%; position:absolute;"
+     id="DivDetailView">
+</div>
+<div id="DivListView" class="container visible">
+    <p>
+        <a asp-action="Create" class="btn btn-sm btn-success ml-1">Create New Ajax</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParentTask)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model)
+            {
+                <tr id="TR_@item.ID">
+                    <partial name="_task" model="@item"/>
+                </tr>        
+            }
+        </tbody>
+    </table>
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         function deleteItem(form){
-                var removeItemEl = $(form);
-                removeItemEl.closest("tr").remove();
-            } 
+                var removeItem = $(form);
+                removeItem.closest("tr").remove();
+            }
+        function ShowDetailForm(){
+            $("#DivDetailView").addClass("visible");
+            $("#DivDetailView").removeClass("invisible");
+
+            $("#DivListView").addClass("invisible");
+            $("#DivListView").removeClass("visible");
+            return;
+        }
+        function CloseDetailForm(){
+            $("#DivDetailView").addClass("invisible");
+            $("#DivDetailView").removeClass("visible");
+
+            $("#DivListView").addClass("visible");
+            $("#DivListView").removeClass("invisible");
+            return;
+        } 
     </script>
 
 }

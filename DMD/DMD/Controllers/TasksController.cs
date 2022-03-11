@@ -171,6 +171,26 @@ namespace DMD.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        public IActionResult ViewTask(string Id)
+        {
+            Models.Task task = _context.Tasks.Find(Id);
+            return PartialView("_detail", task);
+        }
+
+        public IActionResult EditTask(string Id)
+        {
+            Models.Task task = _context.Tasks.Find(Id);
+            return PartialView("_Edit", task);
+        }
+
+        public IActionResult UpdateTask(Models.Task task)
+        {
+            _context.Attach(task);
+            _context.Entry(task).State = EntityState.Modified;
+            _context.SaveChanges();
+            return PartialView("_Task", task);
+        }
         #endregion
 
         private bool TaskExists(int id)
